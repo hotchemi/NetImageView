@@ -8,37 +8,37 @@ public class NetImageTask implements Runnable {
 
     private static final int BITMAP_READY = 0;
 
-    private boolean mCancelled;
+    private boolean cancelled;
 
-    private OnCompleteHandler mOnCompleteHandler;
+    private OnCompleteHandler onCompleteHandler;
 
-    private Image mImage;
+    private Image image;
 
     public abstract static class OnCompleteListener {
         public abstract void onComplete();
     }
 
     public NetImageTask(final Image image) {
-        mImage = image;
+        this.image = image;
     }
 
     @Override
     public void run() {
-        if (mImage != null) complete(mImage.getBitmap());
+        if (image != null) complete(image.getBitmap());
     }
 
-    public void setmOnCompleteHandler(OnCompleteHandler handler) {
-        mOnCompleteHandler = handler;
+    public void setOnCompleteHandler(OnCompleteHandler handler) {
+        onCompleteHandler = handler;
     }
 
     public void cancel() {
-        mCancelled = true;
+        cancelled = true;
     }
 
     public void complete(final Bitmap bitmap) {
-        if (mOnCompleteHandler != null && !mCancelled) {
-            Message message = mOnCompleteHandler.obtainMessage(BITMAP_READY, bitmap);
-            mOnCompleteHandler.sendMessage(message);
+        if (onCompleteHandler != null && !cancelled) {
+            Message message = onCompleteHandler.obtainMessage(BITMAP_READY, bitmap);
+            onCompleteHandler.sendMessage(message);
         }
     }
 

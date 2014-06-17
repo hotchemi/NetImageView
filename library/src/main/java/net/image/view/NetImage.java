@@ -1,5 +1,6 @@
 package net.image.view;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -13,28 +14,32 @@ public class NetImage implements Image {
 
     private static final int READ_TIMEOUT = 10000;
 
-    private static WebImageCache webImageCache;
+    private static NetImageCache imageCache;
 
     private String url;
 
-    public NetImage(final String url) {
+    private Context context;
+
+    public NetImage(final Context context, final String url) {
+        this.context = context;
         this.url = url;
     }
 
+    @Override
     public Bitmap getBitmap() {
         // Don't leak context
-        if (webImageCache == null) {
-            webImageCache = new WebImageCache(context);
+        if (imageCache == null) {
+            imageCache = new NetImageCache(context);
         }
 
         // Try getting bitmap from cache first
         Bitmap bitmap = null;
         if (url != null) {
-            bitmap = webImageCache.get(url);
+            bitmap = imageCache.get(url);
             if (bitmap == null) {
                 bitmap = getBitmapFromUrl(url);
                 if (bitmap != null) {
-                    webImageCache.put(url, bitmap);
+                    imageCache.put(url, bitmap);
                 }
             }
         }
@@ -55,8 +60,8 @@ public class NetImage implements Image {
     }
 
     public static void removeFromCache(String url) {
-        if (webImageCache != null) {
-            webImageCache.remove(url);
+        if (imageCache != null) {
+            imageCache.remove(url);
         }
     }
 

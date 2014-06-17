@@ -23,7 +23,7 @@ public class NetImageCache {
 
     private String diskCachePath;
 
-    private boolean diskCacheEnabled = false;
+    private boolean diskCacheEnabled;
 
     private ExecutorService writeThread;
 
@@ -53,7 +53,6 @@ public class NetImageCache {
         // Check for image on disk cache
         if (bitmap == null) {
             bitmap = getBitmapFromDisk(url);
-
             // Write bitmap back into memory cache
             if (bitmap != null) {
                 cacheBitmapToMemory(url, bitmap);
