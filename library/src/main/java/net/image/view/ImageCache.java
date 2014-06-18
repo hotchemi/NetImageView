@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class NetImageCache {
+public class ImageCache {
 
     private static final String DISK_CACHE_PATH = "/web_image_cache/";
 
@@ -27,7 +27,7 @@ public class NetImageCache {
 
     private ExecutorService writeThread;
 
-    public NetImageCache(final Context context) {
+    public ImageCache(final Context context) {
         // Set up in-memory cache store
         memoryCache = new ConcurrentHashMap<String, SoftReference<Bitmap>>();
 

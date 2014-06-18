@@ -14,17 +14,15 @@ public class NetImageTask implements Runnable {
 
     private Image image;
 
-    public abstract static class OnCompleteListener {
-        public abstract void onComplete();
-    }
-
     public NetImageTask(final Image image) {
         this.image = image;
     }
 
     @Override
     public void run() {
-        if (image != null) complete(image.getBitmap());
+        if (image != null) {
+            complete(image.getBitmap());
+        }
     }
 
     public void setOnCompleteHandler(OnCompleteHandler handler) {
@@ -52,6 +50,10 @@ public class NetImageTask implements Runnable {
 
         public abstract void onComplete(final Bitmap bitmap);
 
+    }
+
+    public abstract static class OnCompleteListener {
+        public abstract void onComplete();
     }
 
 }

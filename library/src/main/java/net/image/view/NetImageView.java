@@ -74,12 +74,12 @@ public class NetImageView extends ImageView {
 
     public void setImage(final Image image, final Integer fallbackResource, final Integer loadingResource, final NetImageTask.OnCompleteListener completeListener) {
         // Set a loading resource
-        if(loadingResource != null){
+        if (loadingResource != null) {
             setImageResource(loadingResource);
         }
 
         // Cancel any existing tasks for this image view
-        if(currentTask != null) {
+        if (currentTask != null) {
             currentTask.cancel();
             currentTask = null;
         }
@@ -89,16 +89,16 @@ public class NetImageView extends ImageView {
         currentTask.setOnCompleteHandler(new NetImageTask.OnCompleteHandler() {
             @Override
             public void onComplete(Bitmap bitmap) {
-                if(bitmap != null) {
+                if (bitmap != null) {
                     setImageBitmap(bitmap);
                 } else {
                     // Set fallback resource
-                    if(fallbackResource != null) {
+                    if (fallbackResource != null) {
                         setImageResource(fallbackResource);
                     }
                 }
 
-                if(completeListener != null){
+                if (completeListener != null) {
                     completeListener.onComplete();
                 }
             }
